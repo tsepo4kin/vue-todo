@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue-todo</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but vue-todo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div>
+    	<ul id="dropdown1" class="dropdown-content">
+		  <li><a href="#!">one</a></li>
+		  <li><a href="#!">two</a></li>
+		  <li class="divider"></li>
+		  <li><a href="#!">three</a></li>
+		</ul>
+    	<nav class="mb20">
+		    <div class="nav-wrapper light-blue">
+		      <div class="brand-logo">
+		      	<a href="#" class="" style="margin-left: 10px;">Vue-todo</a>
+		      	<span class="black-text" style="font-size: 22px;">
+		      		<span class="hide-on-med-and-down">dd.mm.yy</span> hh:mm:ss
+		      	</span>
+		      </div>
+		      <ul id="nav-mobile" class="right hide-on-med-and-down">
+		        <li><a href="">Todo list</a></li>
+		        <li><a href="">Add todo</a></li>
+		        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+		      </ul>
+		    </div>
+		</nav>
+		<div class="row">
+			<div class="col col s12 m8 l6  push-m2 push-l3">
+				<div class="page-title">
+				    <h4>Todo list</h4>
+				</div>
+				<div class="card blue darken-3 bill-card">
+			        <div class="card-content white-text">
+			          <div class="card-header">
+			            <span class="card-title">Tasks</span>
+			          </div>
+			          <table>
+			            <thead>
+			            <tr>
+			              <th>Task</th>
+			              <th >Date</th>
+			              <th>Status</th>
+						  <th>Edit</th>
+						  <th></th>
+			            </tr>
+			            </thead>
+
+			            <tbody>
+			            <tr class="indigo lighten-2">
+			              <td class="">Zakonchit parashy</td>
+			              <td>12.12.12</td>
+			              <td>
+			              	<span class="white-text badge light-green darken-1">done</span>
+			              </td>
+			              <td>
+			              	<button class="btn btn-small deep-purple accent-1">
+			              		<i class="material-icons small">edit</i>
+			              	</button>
+			              </td>
+			              <td>
+			              	<button class="btn btn-small red darken-4">
+			              		<i class="material-icons small">close</i>
+			                </button>
+			          	  </td>
+			            </tr>
+			            </tbody>
+			          </table>
+			          paginate
+			        </div>
+			    </div>
+			    <button class="light-blue darken-1 btn btn-large waves-effect waves-light" type="submit" name="action">Add new task
+					<i class="material-icons right">add</i>
+				</button>
+			</div>
+		</div>
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+  <style>
+  	.page-title{-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-align-items:center;-ms-flex-align:center;align-items:center;padding-bottom:1rem;
+  		border-bottom:solid 1px rgba(51,51,51,.12)}
+	.page-title a{color:#000;opacity:.8}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</html>

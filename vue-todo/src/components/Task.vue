@@ -1,53 +1,104 @@
 <template>
-  <div class="row">
-    <div class="col col s12 m8 l6  push-m2 push-l3">
-      <div class="page-title">
-        <h4>Task edit</h4>
-      </div>
-      <div class="card blue darken-3 bill-card">
-        <div class="card-content white-text">
-          <div class="card-header">
-            <span class="card-title">Task</span>
-          </div>
-          <form action="">
-            <div class="row">
-              <div class="input-field col l12 ">
-                <input id="taskName" type="text" class="validate">
-                <label for="taskName" class="">Task Name</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col l12">
-                <textarea id="taskDescription" type="text" class="materialize-textarea"></textarea>
-                <label for="taskDescription">Task Description</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col  l4">
-                <input type="text" class="datepicker">
-                <label for="timeline">Date</label>
-              </div>
-              <div class="input-field col push-l4 l4">
-                <input type="text" class="timepicker">
-                <label for="timeline">Time</label>
-              </div>
-            </div>
-          </form>
-
+  <div>
+    <Loader v-if="loading" />
+    <div v-else class="row">
+      <div class="col col s12 m8 l6  push-m2 push-l3">
+        <div class="page-title">
+          <h4>Task edit</h4>
         </div>
+        <div class="card blue darken-3 bill-card">
+          <div class="card-content white-text">
+            <div class="card-header">
+              <span class="card-title">Task</span>
+            </div>
+            <form action="">
+              <div class="row">
+                <div class="input-field col l12 ">
+                  <input
+                    v-model="task.title"
+                    id="taskName"
+                    type="text"
+                    class="validate"
+                  >
+                  <label for="taskName" class="">Task Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col l12">
+                <textarea
+                  ref="taskDescription"
+                  v-model="task.description"
+                  id="taskDescription"
+                  type="text"
+                  class="materialize-textarea"
+                ></textarea>
+                  <label for="taskDescription">Task Description</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col  l4">
+                  <input
+                    v-model="task.date"
+                    id="dateline"
+                    type="text"
+                    class="datepicker"
+                  >
+                  <label for="dateline">Date</label>
+                </div>
+                <div class="input-field col push-l4 l4">
+                  <input
+                    v-model="task.time"
+                    id="timeline"
+                    type="text"
+                    class="timepicker"
+                  >
+                  <label for="timeline">Time</label>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+        <button
+          @click.prevent="updateTsk"
+          class="light-blue darken-1 btn btn-large waves-effect waves-light"
+          type="submit"
+          name="action"
+        >Confirm
+          <i class="material-icons right">check</i>
+        </button>
+        <router-link
+          tag="button"
+          :to="'/'"
+          v-tooltip="'Back to todo list'"
+          class="right red darken-1 btn btn-large waves-effect waves-light" type="submit" name="action">Close
+          <i class="material-icons right">close</i>
+        </router-link>
       </div>
-      <button class="light-blue darken-1 btn btn-large waves-effect waves-light" type="submit" name="action">Confirm
-        <i class="material-icons right">check</i>
-      </button>
-      <button class="right red darken-1 btn btn-large waves-effect waves-light" type="submit" name="action">Clear
-        <i class="material-icons right">close</i>
-      </button>
     </div>
   </div>
 </template>
 <script>
   export default {
-
+    data: () => ({
+      task: {},
+      loading: true
+    }),
+    async mounted() {
+      const id = this.$route.params.id;
+      this.task = await this.$store.dispatch('taskById', id);
+      setTimeout(() => {
+        M.updateTextFields();
+        M.textareaAutoResize(this.$refs['taskDescription']);
+      });
+      this.loading = false
+    },
+    methods: {
+      async updateTsk() {
+        await this.$store.dispatch('updateTask', this.task)
+        this.$message('Task success update')
+      }
+    }
   }
 </script>
 <style scoped>

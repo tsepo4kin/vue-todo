@@ -34,7 +34,7 @@ const router = new Router({
       component: () => import('./components/AddTask.vue')
     },
     {
-      path: '/task',
+      path: '/task/:id',
       name: 'task',
       meta: {layout: 'main', auth: true},
       component: () => import('./components/Task.vue')

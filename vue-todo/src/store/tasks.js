@@ -9,6 +9,20 @@ export default {
     },
     refreshTasks(state, tasks) {
       state.tasks = tasks
+    },
+    updTsk(state, id, tsk) {
+      for(let i = 0; i < state.tasks.length; i++) {
+        if(state.tasks[i].id === id){
+          state.tasks[i] = tsk
+        }
+      }
+    },
+    deleteTsk(state, id) {
+      for(let i = 0; i < state.tasks.length; i++) {
+        if(state.tasks[i].id === id){
+          state.tasks.splice(i, 1);
+        }
+      }
     }
   },
   getters: {
@@ -32,27 +46,41 @@ export default {
         const tasksArray = Object.keys(task).map(key => ({...task[key], id: key}))
         commit('refreshTasks', tasksArray)
       } catch (e) {
+        commit('setError', e);
         throw e
       }
     },
     async taskById({commit, dispatch}, id) {
       try {
         const uid = await dispatch('getUid')
-        const task = (await firebase.database().ref(`users/${uid}/task`).child(id).once('value')).val() || {}
+        const task = (await firebase.database().ref(`users/${uid}/tasks`).child(id).once('value')).val() || {}
         return {
           ...task,
           id
         }
 
       }catch (e) {
+        commit('setError', e);
         throw e
       }
     },
-    async updateTask({dispatch}, {title, description, date, time, isDone, id}) {
+    async updateTask({dispatch, commit}, {title, description, date, time, isDone, id}) {
       try {
         const uid = await dispatch('getUid')
         await firebase.database().ref(`users/${uid}/tasks`).child(id).update({title, description, date, time,isDone})
+        commit('updTsk', id, {title, description, date, time, isDone, id})
       } catch (e) {
+        commit('setError', e);
+        throw e
+      }
+    },
+    async deleteTask({commit, dispatch}, id) {
+      try {
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`users/${uid}/tasks`).child(id).remove()
+        commit('deleteTsk', id)
+      } catch (e) {
+        commit('setError', e);
         throw e
       }
     }

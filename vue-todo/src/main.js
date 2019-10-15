@@ -10,7 +10,7 @@ import messagePlugin from '@/utils/message.plugin'
 import 'firebase/auth'
 import 'firebase/database'
 import tooltip from '@/directives/tooltip'
-
+import dateFilter from '@/filters/date.filter'
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min'
 
@@ -18,7 +18,8 @@ Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
 Vue.directive('tooltip',tooltip);
-Vue.component('Loader', Loader)
+Vue.component('Loader', Loader);
+Vue.filter('date', dateFilter);
 
 firebase.initializeApp(
 {

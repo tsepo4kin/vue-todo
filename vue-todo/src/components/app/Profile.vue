@@ -5,12 +5,12 @@
         <h4 class="page-title">
           Profile
           <span class="card-title">
-            name
+            {{name}}
           </span>
         </h4>
       </div>
       <div class="card-content">
-        jopa
+        table: tsks_complited: 000, daysPlaning complited: 000, nowTasks: 000, nowDaysPLanings: 000
       </div>
 
     </div>
@@ -19,6 +19,10 @@
 <script>
 
   export default {
-
+    computed: {
+      name() {
+        return this.$store.getters.info.name
+      }
+    }
   }
 </script>

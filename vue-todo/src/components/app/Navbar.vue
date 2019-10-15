@@ -3,9 +3,9 @@
     <nav class="mb20">
       <div class="nav-wrapper light-blue">
         <div class="brand-logo">
-          <a href="#" class="" style="margin-left: 10px;">Vue-todo</a>
+          <router-link :to="'/'" class="" style="margin-left: 10px;">Vue-todo</router-link>
           <span class="black-text" style="font-size: 22px;">
-          <span class="hide-on-med-and-down">dd.mm.yy</span> hh:mm:ss
+          <span class="hide-on-med-and-down">{{date | date('date')}}</span> {{date | date('time')}}
         </span>
         </div>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -34,12 +34,17 @@
         {title: 'Todo list', url: '/', exact: true},
         {title: 'Add task', url: '/AddTask'}
       ],
+      date: new Date(),
+      interval: null,
       dropdown: null
     }),
     mounted() {
       this.dropdown = M.Dropdown.init(this.$refs.dropdown), {
         constrainWidth: false
-      }
+      };
+      this.interval = setInterval(() => {
+        this.date = new Date();
+      }, 1000)
 
     },
     computed: {
@@ -54,6 +59,7 @@
       }
     },
     beforeDestroy() {
+      clearInterval(this.interval);
       if(this.dropdown && this.dropdown.destroy) {
         this.dropdown.destroy();
       }

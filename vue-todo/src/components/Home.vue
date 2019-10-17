@@ -28,7 +28,7 @@
                 <td class="">{{task.title}}</td>
                 <td
                   style="font-size: 12px;"
-                  :class="task.isDone ? 'done' : 'notDone'"
+                  :class="task.isDone ? 'done_home' : 'notDone_home'"
                 >{{task.isDone ? 'done' : 'notDone'}}</td>
                 <td
                   style="font-size: 12px;"
@@ -69,9 +69,9 @@
               v-model='page'
               :page-count='pageCount'
               :click-handler='pageChangeHandler'
-              :prev-text="'prev'"
-              :next-text="'next'"
-              :container-class="'pagination'"
+              :prev-text="'<<'"
+              :next-text="'>>'"
+              :container-class="'pagination center'"
               :page-class="'waves-effect'"
             />
           </div>
@@ -103,21 +103,20 @@
       this.loading = false
     },
     computed: {
-      tasksUpd() {
-        this.tasks = this.$store.getters.getTasks
+      async tasksUpd() {
+        this.tasks = await this.$store.getters.getTasks
       }
     },
     methods: {
       async statusChange(id) {
         let formData = {};
-        for(let i = 0; i < this.tasks.length; i++) {
-          if(this.tasks[i].id === id) {
-            this.tasks[i].isDone = !this.tasks[i].isDone
-            formData = this.tasks[i]
-            formData.id = id;
+        for(let i = 0; i < this.items.length; i++) {
+          if(this.items[i].id === id) {
+            this.items[i].isDone = !this.items[i].isDone
+            formData = this.items[i];
+            await this.$store.dispatch('updateTask', formData)
           }
         }
-        await this.$store.dispatch('updateTask', formData)
       },
       async deleteTask(id) {
         await this.$store.dispatch('deleteTask', id)
@@ -125,12 +124,17 @@
     }
   }
 </script>
-<style scoped>
-  .notDone{
+<style>
+  .pagination li a{
+    color: white !important;
+  }
+
+
+  .notDone_home{
     color: #d50000;
     font-weight: bold;
   }
-  .done {
+  .done_home {
     color: #b9f6ca ;
     font-weight: bold;
   }

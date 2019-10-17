@@ -24,7 +24,7 @@
               </thead>
 
               <tbody>
-              <tr v-for="task in tasks" :class="task.isDone ? 'purple darken-4' : 'indigo lighten-2'">
+              <tr v-for="task in items" :class="task.isDone ? 'purple darken-4' : 'indigo lighten-2'">
                 <td class="">{{task.title}}</td>
                 <td
                   style="font-size: 12px;"
@@ -65,7 +65,15 @@
               </tr>
               </tbody>
             </table>
-            paginate
+            <paginate
+              v-model='page'
+              :page-count='pageCount'
+              :click-handler='pageChangeHandler'
+              :prev-text="'prev'"
+              :next-text="'next'"
+              :container-class="'pagination'"
+              :page-class="'waves-effect'"
+            />
           </div>
         </div>
         <button
@@ -81,7 +89,9 @@
   </div>
 </template>
 <script>
+  import paginationMixin from '@/mixins/pagination.mixin'
   export default {
+    mixins: [paginationMixin],
     data: () => ({
       tasks: [],
       loading: true
@@ -89,6 +99,7 @@
     async mounted() {
       await this.$store.dispatch('fetchTasks');
       await this.tasksUpd;
+      this.setupPagination(this.tasks)
       this.loading = false
     },
     computed: {

@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import Vuelidate from 'vuelidate'
 import Loader from '@/components/app/Loader'
-
+import Paginate from 'vuejs-paginate'
 import firebase from 'firebase/app'
 import messagePlugin from '@/utils/message.plugin'
 import 'firebase/auth'
@@ -20,6 +20,7 @@ Vue.use(messagePlugin);
 Vue.directive('tooltip',tooltip);
 Vue.component('Loader', Loader);
 Vue.filter('date', dateFilter);
+Vue.component('paginate', Paginate);
 
 firebase.initializeApp(
 {

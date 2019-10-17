@@ -10,9 +10,9 @@ export default {
     refreshTasks(state, tasks) {
       state.tasks = tasks
     },
-    updTsk(state, id, tsk) {
+    updTsk(state, tsk) {
       for(let i = 0; i < state.tasks.length; i++) {
-        if(state.tasks[i].id === id){
+        if(state.tasks[i].id === tsk.id){
           state.tasks[i] = tsk
         }
       }
@@ -68,7 +68,7 @@ export default {
       try {
         const uid = await dispatch('getUid')
         await firebase.database().ref(`users/${uid}/tasks`).child(id).update({title, description, date, time,isDone})
-        commit('updTsk', id, {title, description, date, time, isDone, id})
+        commit('updTsk', {title, description, date, time, isDone, id})
       } catch (e) {
         commit('setError', e);
         throw e

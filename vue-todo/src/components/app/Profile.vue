@@ -1,15 +1,15 @@
 <template>
   <div class="row">
+    <div class="popup col col l1 m3 s6" v-if="showChangeInp">
+      <input id="name" type="text" v-model="name">
+      <label for="name">Name</label>
+    </div>
     <div class="card col col s12 m8 l6  push-m2 push-l3 blue darken-3">
-      <div class="popup" v-if="showChangeInp">
-        <input id="name" type="text" v-model="name">
-        <label for="name">Name</label>
-      </div>
       <div class="card-header white-text">
         <h4 class="page-title">
           Profile
           <span class="card-title">
-            {{name}}
+            {{getName}}
           </span>
           <i class="material-icons small" @click="editName">edit</i>
         </h4>
@@ -45,13 +45,23 @@
       showChangeInp: false,
       name: ''
     }),
-    mounted() {
-        this.name = this.$store.getters.info.name
-    },
     methods: {
       editName() {
+        if(!this.showChangeInp) {
+          this.name = this.getName
+        }
         this.showChangeInp = !this.showChangeInp
       }
-    }
+    },
+    computed: {
+      getName() {
+        return this.$store.getters.info.name
+      }
+    },
   }
 </script>
+<style scoped>
+  .popup {
+    position: absolute;
+  }
+</style>

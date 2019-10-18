@@ -45,6 +45,7 @@
                 </td>
                 <td>
                   <router-link
+                    v-if="!task.isDone"
                     tag="button"
                     :to="'/task/' + task.id"
                     v-tooltip="'edit task'"
@@ -56,6 +57,7 @@
                 </td>
                 <td>
                   <button
+                    v-if="!task.isDone"
                     @click.prevent="deleteTask(task.id)"
                     v-tooltip="'delete task'"
                     class="btn btn-small red darken-4">
@@ -77,12 +79,18 @@
           </div>
         </div>
         <button
-          class="light-blue darken-1 btn btn-large waves-effect waves-light"
+          class="indigo darken-3 btn btn-large waves-effect waves-light"
           type="submit"
           name="action"
           @click='$router.push("/AddTask")'
         >Add new task
           <i class="material-icons right">add</i>
+        </button>
+
+        <button
+          class="indigo darken-3 btn btn-large waves-effect waves-light right"
+        >Commit done tasks
+          <i class="material-icons right">bookmark</i>
         </button>
       </div>
     </div>

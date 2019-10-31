@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="popup col col l1 m3 s6" v-if="showChangeInp">
-      <input id="name" type="text" v-model="name">
+      <input id="name" type="text" v-model="name" />
       <label for="name">Name</label>
     </div>
     <div class="card col col s12 m8 l6  push-m2 push-l3 blue darken-3">
@@ -9,7 +9,7 @@
         <h4 class="page-title">
           Profile
           <span class="card-title">
-            {{getName}}
+            {{ getName }}
           </span>
           <i class="material-icons small" @click="editName">edit</i>
         </h4>
@@ -17,7 +17,7 @@
       <div class="card-content white-text">
         <table>
           <tr>
-            <th>tsk complited: </th>
+            <th>tsk complited:</th>
             <th>000</th>
           </tr>
           <tr>
@@ -34,34 +34,32 @@
           </tr>
         </table>
       </div>
-
     </div>
   </div>
 </template>
 <script>
-
-  export default {
-    data: () => ({
-      showChangeInp: false,
-      name: ''
-    }),
-    methods: {
-      editName() {
-        if(!this.showChangeInp) {
-          this.name = this.getName
-        }
-        this.showChangeInp = !this.showChangeInp
+export default {
+  data: () => ({
+    showChangeInp: false,
+    name: ""
+  }),
+  methods: {
+    editName() {
+      if (!this.showChangeInp) {
+        this.name = this.getName;
       }
-    },
-    computed: {
-      getName() {
-        return this.$store.getters.info.name
-      }
-    },
+      this.showChangeInp = !this.showChangeInp;
+    }
+  },
+  computed: {
+    getName() {
+      return this.$store.getters.info.name;
+    }
   }
+};
 </script>
 <style scoped>
-  .popup {
-    position: absolute;
-  }
+.popup {
+  position: absolute;
+}
 </style>

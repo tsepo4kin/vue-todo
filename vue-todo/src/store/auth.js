@@ -1,34 +1,37 @@
-import firebase from 'firebase/app'
+import firebase from "firebase/app";
 export default {
   actions: {
-    async login({dispatch, commit}, {email, password}) {
+    async login({ commit }, { email, password }) {
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password)
-      } catch(e) {
-        commit('setError', e);
-        throw e
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+      } catch (e) {
+        commit("setError", e);
+        throw e;
       }
     },
-    async logout({commit}) {
+    async logout({ commit }) {
       await firebase.auth().signOut();
-      commit('clearInfo')
+      commit("clearInfo");
     },
-    async register({dispatch, commit}, {email, password, name}) {
+    async register({ dispatch, commit }, { email, password, name }) {
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const uid = await dispatch('getUid');
-        await firebase.database().ref(`/users/${uid}/info`).set({
-          tasks: 0,
-          name
-        })
-      } catch(e) {
-        commit('setError', e);
-        throw e
+        const uid = await dispatch("getUid");
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .set({
+            tasks: 0,
+            name
+          });
+      } catch (e) {
+        commit("setError", e);
+        throw e;
       }
     },
     getUid() {
       const user = firebase.auth().currentUser;
-      return user ? user.uid : null
+      return user ? user.uid : null;
     }
   }
-}
+};
